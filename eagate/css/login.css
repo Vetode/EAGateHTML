@@ -1,0 +1,209 @@
+@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #451666;
+    padding: 30px;
+}
+
+.container {
+    position: relative;
+    max-width: 850px;
+    width: 100%;
+    background: #fff;
+    padding: 40px 30px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.container .cover {
+    position: absolute;
+    height: 100%;
+    width: calc(50% + 50px);
+    background: none;
+    bottom: 0;
+    right: 0;
+}
+
+.container .cover #login-screen {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.container .cover .text {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 50%;
+    width: 45%;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+}
+
+.cover .text #logo-name {
+    font-size: 40px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.cover .text #logo-text {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.container form {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+}
+
+.container .form-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-content .login-form {
+    width: calc(100% / 2 - 50px);
+}
+
+form .form-content .title {
+    position: relative;
+    font-size: 25px;
+    font-weight: 500;
+    color: #333;
+}
+
+form .form-content .title:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 25px;
+    background: #451666;
+}
+
+form .form-content .input-boxes {
+    margin-top: 30px;
+
+}
+
+form .form-content .input-box {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    margin: 0 10px;
+    position: relative;
+    margin: 10px 0;
+}
+
+.form-content .input-box input {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 0 30px;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.form-content .input-box input:focus,
+.form-content .input-box input:valid {
+    border-color: #451666;
+}
+
+.form-content .input-box i {
+    position: absolute;
+    color: #451666;
+    font-size: 17px;
+}
+
+form .form-content .text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+form .form-content a {
+    text-decoration: none;
+}
+
+form .form-content a:hover {
+    text-decoration: underline;
+}
+
+form .form-content .error-box {
+    height: 50px;
+    margin: 15px 15px 0;
+}
+
+form .form-content .error-mensage {
+    color: #fff;
+    background: rgb(248, 110, 110);
+    font-weight: 500;
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+form .input-boxes .button {
+    color: #fff;
+}
+
+form .input-boxes .button input {
+    color: #fff;
+    background: #451666;
+    border-radius: 6px;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+form .input-boxes .button input:hover {
+    background: #621f92;
+}
+
+@media (max-width: 780px) {
+    .container .cover {
+        height: 80%;
+    }
+
+    .cover .text #logo-text {
+        display: none;
+    }
+
+    form .form-content .error-box {
+        height: 50px;
+        margin: 15px 0 0;
+    }
+}
+
+@media (max-width: 690px) {
+    .container .cover {
+        display: none;
+    }
+
+    .form-content .login-form {
+        width: 100%;
+    }
+}

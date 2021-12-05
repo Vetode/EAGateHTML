@@ -1,0 +1,123 @@
+<?php
+    // OBTÉM A DATA ATUAL E IDENTIFICA O DIA DA SEMANA
+    $diasDaSemana = array (0 => "Domingo", 1 => "Segunda-Feira", 2 => "Terça-Feira", 3 => "Quarta-Feira", 4 => "Quinta-Feira", 5 => "Sexta-Feira", 6 => "Sábado");
+    $hoje = getdate();
+    if ($hoje["hours"] < 3) {
+        if($hoje["wday"] == 0){
+            $hoje["wday"] = 6;
+        } else {
+            $hoje["wday"] -= 1;
+        }
+        $hoje["mday"] -=1;
+    }
+    $diaSemana = $hoje["wday"];
+    $diaDaSemana = $diasDaSemana[$diaSemana];
+
+    // VERIFICA A SITUAÇÃO DO ALUNO NO CURSO: 1 - INSCRITO || 0 - TRANCADO
+    $situacao = $conexao->query("select ac.situacao from login
+                                join aluno a on login.usuario = '$_SESSION[usuario]' and login.aluno = a.id
+                                join aluno_curso ac on a.id = ac.aluno");
+    $situacao = $situacao->fetch(PDO::FETCH_ASSOC);
+
+    if ($situacao["situacao"]) {
+        // SE O USUÁRIO ESTAVA COM O LOG REGISTRADO NO BD, O LOG SERÁ APAGADO
+        if($conexao->query("select acesso from acesso_login join login on login.usuario = '$_SESSION[usuario]' and acesso_login.usuario = login.id")->rowCount()){
+            $codigo = $conexao->query("SELECT al.id FROM acesso_login al JOIN login l ON l.usuario = '$_SESSION[usuario]' and l.id = al.usuario");
+            $codigo = $codigo->fetch(PDO::FETCH_ASSOC);
+            $conexao->query("DELETE FROM acesso_login WHERE id = '$codigo[id]'");
+        }
+
+        // BUSCA NO BANCO DE DADOS AS INFORMAÇÕES REFERENTES A AULA DO DIA
+        $agenda = $conexao->query("select m.nome, m.codigo, t.dia, l.bloco, l.andar, l.sala from login
+                                join aluno a on login.usuario = '$_SESSION[usuario]' and login.aluno = a.id
+                                join aluno_turma atm on a.id = atm.aluno join turma t on atm.turma = t.id and t.dia = '$diaDaSemana'
+                                join materia m on t.materia = m.id join localidade_turma lt on t.id = lt.turma
+                                join localidade l on lt.localidade = l.id");
+        if($agenda->rowcount()){
+            $agenda = $agenda->fetch(PDO::FETCH_NAMED);
+            $exibe = $diaDaSemana;
+            $materia = $agenda['codigo'];
+            $localidade = "Bloco: ".$agenda['bloco']." - ".$agenda['andar']."° piso - sala: ".$agenda['sala'];
+            $legendainf = "<b>$agenda[codigo]:</b> $agenda[nome]";
+        } else {
+            $exibe = $diaDaSemana;
+            $materia = "-";
+            $localidade = "-";
+            $legendainf = "SEM AULAS <b>HOJE</b>";
+        }
+?>
+        <div id="area-class">
+            <h2>Aulas do Dia</h2>
+            <div id="tabela">
+                <div class="calendario"><h3><?php echo $exibe;?></h3></div>
+                <div class="calendario">
+                    <div class="time">18:40</div>
+                    <div class="class"><?php echo $materia;?></div>
+                    <div class="room"><?php echo $localidade;?></div>
+                </div>
+                <div class="calendario">
+                    <div class="time">19:40</div>
+                    <div class="class"><?php echo $materia;?></div>
+                    <div class="room"><?php echo $localidade;?></div>
+                </div>
+                <div class="calendario">
+                    <div class="time">20:40</div>
+                    <div class="class"><?php echo $materia;?></div>
+                    <div class="room"><?php echo $localidade;?></div>
+                </div>
+                <div class="legenda-box">
+                    <input type="checkbox" id="check">
+                    <label for="check"><i class='bx bx-detail'></i></label>
+                    <div class="legenda">
+                        <?php echo $legendainf;?>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+<?php
+    } else {
+        // SE A SITUAÇÃO FOR TRANCADO: SE O LOG NÃO ESTÁ CADASTRADO NO BD ELE É REGISTRADO COM A DATA ATUAL
+        if(!$conexao->query("select acesso from acesso_login al join login l on l.usuario = '$_SESSION[usuario]' and al.usuario = l.id;")->rowCount()){
+            $result = $conexao->query("select id from login where usuario = '$_SESSION[usuario]'");
+            $result = $result->fetch(PDO::FETCH_ASSOC);
+            $acesso = getdate();
+            if ($acesso["hours"] < '3') {
+                $acesso["mday"] -= 1;
+            }
+            $dataAcesso = $acesso["year"]."-".$acesso["mon"]."-".$acesso["mday"];
+            $conexao->query("insert into acesso_login (usuario, acesso) values ('$result[id]', '$dataAcesso')");
+        }
+
+        // CALCULA A DIFERENÇA ENTRE A DATA DO LOG E A DATA ATUAL
+        $diahoje = $hoje["year"]."-".$hoje["mon"]."-".$hoje["mday"];
+        $log = $conexao->query("select acesso from acesso_login al join login l on l.usuario = '$_SESSION[usuario]' and l.id = al.usuario");
+        $log = $log->fetch(PDO::FETCH_ASSOC);
+        $d1 = new DateTime($log["acesso"]);
+        $d2 = new DateTime($diahoje);
+        $datedif = $d1->diff($d2);
+
+        // SE A DIFERENÇA FOR MAIOR QUE 0 É EXIBIDO OS DIAS RESTANTES
+        if(15 - $datedif->d > 0){
+?>
+    <div id="area-class">
+        <p>Seu acesso será liberado temporariamente, restam <b><?php print_r(15 - $datedif->d); ?> dias</b>.
+        <br>Entre em contato com o coordenador do curso para regularizar sua situação.</p>
+    </div>
+<?php
+        // AO FIM DOS 15 DIAS O QR CODE FICA OCULTO
+        }else {
+?>
+    <style>
+        .home-content #area-code #QRcode {
+            display: none;
+        }
+    </style>
+    <div id="area-class">
+            <p>Seu acesso só poderá ser liberado <b>presencialmente</b>.
+            <br>Entre em contato com o coordenador do curso para regularizar sua situação.</p>
+    </div>
+<?php
+        }
+    }
+?>

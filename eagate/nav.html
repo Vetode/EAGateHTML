@@ -1,0 +1,64 @@
+<?php
+    include("conexao.php");
+    $profile = $conexao->query("select c.nome, a.inscricao, a.nome, a.sobrenome, ac.situacao from login
+                                join aluno a on login.usuario = '$_SESSION[usuario]' and login.aluno = a.id
+                                join aluno_curso ac on a.id = ac.aluno join curso c on ac.curso = c.id");
+    $profile = $profile->fetch(PDO::FETCH_NAMED);
+
+    if(!$profile["situacao"]) {
+        $profile["nome"]["0"] = $profile["nome"]["0"]." (trancado)";
+    }
+?>
+
+<nav class="sidebar">
+    <div class="logo-content">
+        <div class="logo">
+            <!-- <i class='bx bx-qr-scan'></i> -->
+            <span><img src="img/ticket-gate.png" alt="Ícone de catraca" id="icon-logo" ></span>
+            <div class="logo-name">EA Gate</div>
+        </div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+        <li>
+            <a href="painel.php">
+                <i class='bx bx-qr' ></i>
+                <span class="links-name">Acesso</span>
+            </a>
+            <span class="tooltip">Acesso</span>
+        </li>
+        <li>
+            <a href="schedule.php">
+                <i class='bx bx-calendar-alt' ></i>
+                <span class="links-name">Agenda</span>
+            </a>
+            <span class="tooltip">Agenda</span>
+        </li>
+        <li>
+            <a href="about.php">
+                <i class='bx bx-info-circle' ></i>
+                <span class="links-name">Sobre</span>
+            </a>
+            <span class="tooltip">Sobre</span>
+        </li>
+    </ul>
+    <div class="profile-content">
+        <div class="profile">
+            <div class="profile-details">
+                <!-- <img src="img/aquarela-texture-final.jpg" alt="foto de perfil"> -->
+                <div class="name-course">
+                    <div class="name">
+                       <?php echo $profile["nome"]["1"]." ".$profile["sobrenome"];?>
+                    </div>
+                    <div class="course">
+                        <?php echo $profile["nome"]["0"];?>
+                    </div>
+                    <div class="ra">
+                        <?php echo "RA: ".$profile["inscricao"];?>
+                    </div>
+                </div>
+            </div>
+            <a href="logout.php"><i class='bx bx-log-out' id="log-out" ></i></a>
+        </div>
+    </div>
+</nav>

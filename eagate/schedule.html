@@ -1,0 +1,153 @@
+<?php
+    session_start();
+    include("verifica_login.php");
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/content.css">
+    <link rel="stylesheet" href="css/agenda.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="imagem/x-icon" href="img/ticket-gate.ico"/>
+    <title>EA Gate - Agenda</title>
+</head>
+<body>
+    <?php include("nav.php");?>
+    <div class="home-content">
+        <div id="conteudo-interno">
+            <h1>Agenda</h1>
+            <div id="agenda">
+            	<div class="segunda">
+                    <h3>Segunda-Feira</h3>
+                    <?php
+                        $agenda = $conexao->query("select m.nome, m.codigo, t.horario_inicio, l.bloco, l.andar, l.sala from login
+                                                    join aluno a on login.usuario = '$_SESSION[usuario]' and login.aluno = a.id
+                                                    join aluno_turma atm on a.id = atm.aluno join turma t on atm.turma = t.id and t.dia = 'Segunda-Feira'
+                                                    join materia m on t.materia = m.id join localidade_turma lt on t.id = lt.turma
+                                                    join localidade l on lt.localidade = l.id");
+                        if($agenda->rowCount()){
+                            $agenda = $agenda->fetch(PDO::FETCH_ASSOC);
+                            echo $agenda["nome"]." [".$agenda["codigo"]."]<br>";
+                            echo "Bloco: ".$agenda["bloco"]." - ".$agenda["andar"]."° piso - sala: ".$agenda["sala"]."<br>";
+                            echo "Horário: ".$agenda["horario_inicio"];
+                        } else {
+                            echo "Sem aulas hoje";
+                        }
+                    ?>
+                    
+                </div>
+                <div class="terca">
+                    <h3>Terça-Feira</h3>
+                    <?php
+                        $agenda = $conexao->query("select m.nome, m.codigo, t.horario_inicio, l.bloco, l.andar, l.sala from login
+                                                    join aluno a on login.usuario = '$_SESSION[usuario]' and login.aluno = a.id
+                                                    join aluno_turma atm on a.id = atm.aluno join turma t on atm.turma = t.id and t.dia = 'Terça-Feira'
+                                                    join materia m on t.materia = m.id join localidade_turma lt on t.id = lt.turma
+                                                    join localidade l on lt.localidade = l.id");
+                        if($agenda->rowCount()){
+                            $agenda = $agenda->fetch(PDO::FETCH_ASSOC);
+                            echo $agenda["nome"]." [".$agenda["codigo"]."]<br>";
+                            echo "Bloco: ".$agenda["bloco"]." - ".$agenda["andar"]."° piso - sala: ".$agenda["sala"]."<br>";
+                            echo "Horário: ".$agenda["horario_inicio"];
+                        } else {
+                            echo "Sem aulas hoje";
+                        }
+                    ?>
+                </div>
+                <div class="quarta">
+                    <h3>Quarta-Feira</h3>
+                    <?php
+                        $agenda = $conexao->query("select m.nome, m.codigo, t.horario_inicio, l.bloco, l.andar, l.sala from login
+                                                    join aluno a on login.usuario = '$_SESSION[usuario]' and login.aluno = a.id
+                                                    join aluno_turma atm on a.id = atm.aluno join turma t on atm.turma = t.id and t.dia = 'Quarta-Feira'
+                                                    join materia m on t.materia = m.id join localidade_turma lt on t.id = lt.turma
+                                                    join localidade l on lt.localidade = l.id");
+                        if($agenda->rowCount()){
+                            $agenda = $agenda->fetch(PDO::FETCH_ASSOC);
+                            echo $agenda["nome"]." [".$agenda["codigo"]."]<br>";
+                            echo "Bloco: ".$agenda["bloco"]." - ".$agenda["andar"]."° piso - sala: ".$agenda["sala"]."<br>";
+                            echo "Horário: ".$agenda["horario_inicio"];
+                        } else {
+                            echo "Sem aulas hoje";
+                        }
+                    ?>
+                </div>
+                <div class="quinta">
+                    <h3>Quinta-Feira</h3>
+                    <?php
+                        $agenda = $conexao->query("select m.nome, m.codigo, t.horario_inicio, l.bloco, l.andar, l.sala from login
+                                                    join aluno a on login.usuario = '$_SESSION[usuario]' and login.aluno = a.id
+                                                    join aluno_turma atm on a.id = atm.aluno join turma t on atm.turma = t.id and t.dia = 'Quinta-Feira'
+                                                    join materia m on t.materia = m.id join localidade_turma lt on t.id = lt.turma
+                                                    join localidade l on lt.localidade = l.id");
+                        if($agenda->rowCount()){
+                            $agenda = $agenda->fetch(PDO::FETCH_ASSOC);
+                            echo $agenda["nome"]." [".$agenda["codigo"]."]<br>";
+                            echo "Bloco: ".$agenda["bloco"]." - ".$agenda["andar"]."° piso - sala: ".$agenda["sala"]."<br>";
+                            echo "Horário: ".$agenda["horario_inicio"];
+                        } else {
+                            echo "Sem aulas hoje";
+                        }
+                    ?>
+                </div>
+                <div class="sexta">
+                    <h3>Sexta-Feira</h3>
+                    <?php
+                        $agenda = $conexao->query("select m.nome, m.codigo, t.horario_inicio, l.bloco, l.andar, l.sala from login
+                                                    join aluno a on login.usuario = '$_SESSION[usuario]' and login.aluno = a.id
+                                                    join aluno_turma atm on a.id = atm.aluno join turma t on atm.turma = t.id and t.dia = 'Sexta-Feira'
+                                                    join materia m on t.materia = m.id join localidade_turma lt on t.id = lt.turma
+                                                    join localidade l on lt.localidade = l.id");
+                        if($agenda->rowCount()){
+                            $agenda = $agenda->fetch(PDO::FETCH_ASSOC);
+                            echo $agenda["nome"]." [".$agenda["codigo"]."]<br>";
+                            echo "Bloco: ".$agenda["bloco"]." - ".$agenda["andar"]."° piso - sala: ".$agenda["sala"]."<br>";
+                            echo "Horário: ".$agenda["horario_inicio"];
+                        } else {
+                            echo "Sem aulas hoje";
+                        }
+                    ?>
+                </div>
+                <div class="sabado">
+                    <h3>Sábado</h3>
+                    <?php
+                        $agenda = $conexao->query("select m.nome, m.codigo, t.horario_inicio, l.bloco, l.andar, l.sala from login
+                                                    join aluno a on login.usuario = '$_SESSION[usuario]' and login.aluno = a.id
+                                                    join aluno_turma atm on a.id = atm.aluno join turma t on atm.turma = t.id and t.dia = 'Sábado'
+                                                    join materia m on t.materia = m.id join localidade_turma lt on t.id = lt.turma
+                                                    join localidade l on lt.localidade = l.id");
+                        if($agenda->rowCount()) {
+                            $agenda = $agenda->fetch(PDO::FETCH_ASSOC);
+                            echo $agenda["nome"]." [".$agenda["codigo"]."]<br>";
+                            echo "Bloco: ".$agenda["bloco"]." - ".$agenda["andar"]."° piso - sala: ".$agenda["sala"]."<br>";
+                            echo "Horário: ".$agenda["horario_inicio"];
+                        } else {
+                            echo "Sem aulas hoje";
+                        }
+                    ?>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; EA Gate</p>
+        </footer>
+    </div>
+
+    <script>
+        let btn = document.querySelector("#btn");
+        let sidebar = document.querySelector(".sidebar");
+        
+        btn.onclick = function () {
+            sidebar.classList.toggle("active");
+        }
+    </script>
+</body>
+</html>

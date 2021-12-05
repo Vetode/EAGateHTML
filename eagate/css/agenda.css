@@ -1,0 +1,31 @@
+#conteudo-interno #agenda {
+    max-height: 78vh;
+    justify-content: center;
+    overflow: auto;
+}
+
+#conteudo-interno #agenda h3 {
+    margin-bottom: 5px;
+}
+
+#conteudo-interno #agenda .segunda {
+    border-top: 2px solid #11011d;
+}
+#conteudo-interno #agenda .sabado {
+    border-bottom: 2px solid #11011d;
+}
+
+#conteudo-interno #agenda .segunda, .terca, .quarta, .quinta, .sexta, .sabado {
+    text-align: center;
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    border: 2px solid #11011d;
+    border-bottom: none;
+}
+
+/* @media (max-width: 550px) {
+    #conteudo-interno #agenda .segunda, .terca, .quarta, .quinta, .sexta, .sabado {
+        text-align: justify;
+    }
+} */

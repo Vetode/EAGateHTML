@@ -1,0 +1,47 @@
+<?php
+    session_start();
+    include("verifica_login.php");
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/content.css">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="imagem/x-icon" href="img/ticket-gate.ico"/>
+    <title>EA Gate - Sobre</title>
+</head>
+<body>
+    <?php include("nav.php");?>
+    
+    <div class="home-content">
+        <div id="conteudo-interno">
+            <h1>Sobre</h1>
+            <div id="texto-sobre">
+            	<p>A Plataforma EA Gate é um projeto que visa, <i>a priori</i>, promover facilidade e comodidade aos alunos, além de maior segurança e praticidade à Instituição de Ensino.
+                Por intermédio do Portal de Acesso, o aluno terá em mãos o <strong>QR Code</strong> para liberar sua entrada na instituição através 
+                da catraca inteligente, além de contar com informações referentes às aulas diárias, incluindo sua localização, evitando, por fim, a aglomeração de alunos na 
+                entrada e a perda de tempo ao se deslocar pela instituição.</p>
+                <img id="aboutImg0" src="img/login-screen-full.png" alt="">
+                <img id="aboutImg1" src="img/login-screen2-600px.png" alt="">
+            </div>
+        </div>
+        <footer>
+            <p>&copy; EA Gate</p>
+        </footer>
+    </div>
+    <script>
+        let btn = document.querySelector("#btn");
+        let sidebar = document.querySelector(".sidebar");
+        
+        btn.onclick = function () {
+            sidebar.classList.toggle("active");
+        }
+    </script>
+</body>
+</html>

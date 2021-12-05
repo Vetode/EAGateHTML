@@ -1,0 +1,60 @@
+<?php
+    session_start();
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="imagem/x-icon" href="img/ticket-gate.ico"/>
+    <title>EA Gate - Login</title>
+ <!-- Boxicons CDN Link -->
+ <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="cover">
+                <img src="img/login-screen.png" alt="" id="login-screen">
+                <div class="text">
+                    <span id="logo-name">EA Gate</span>
+                    <span id="logo-text">Promovendo praticidade e comodidade no seu dia a dia</span>
+                </div>
+        </div>
+        <form action="login.php" method="POST">
+            <div class="form-content">
+                <div class="login-form">
+                    <div class="title">Login</div>
+                    <div class="input-boxes">
+                        <div class="input-box">
+                            <i class='bx bxs-user'></i>
+                            <input name="usuario" type="text" placeholder="Informe seu login" required>
+                        </div>
+                        <div class="input-box">
+                            <i class='bx bxs-lock-alt'></i>
+                            <input name="senha" type="password" placeholder="Informe sua senha" required>
+                        </div>
+                        <div class="text"><a href="#">Esqueceu sua senha?</a></div>
+                        <div class="error-box">
+                            <?php
+                                if(isset($_SESSION["nao_autenticado"])):
+                            ?>
+                            <div class="error-mensage">Usuário ou senha inválidos</div>
+                            <?php
+                                endif;
+                                unset($_SESSION["nao_autenticado"]);
+                            ?>
+                        </div>
+                        <div class="button input-box">
+                            <input type="submit" value="Login">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

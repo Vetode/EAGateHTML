@@ -1,0 +1,14 @@
+<?php
+$diasDaSemana = array (0 => "Domingo", 1 => "Segunda-Feira", 2 => "Terça-Feira", 3 => "Quarta-Feira", 4 => "Quinta-Feira", 5 => "Sexta-Feira", 6 => "Sábado");
+$hoje = getdate();
+if ($hoje["hours"] < '3') {
+    if($hoje["wday"] == 0){
+        $hoje["wday"] = 6;
+    } else {
+        $hoje["wday"] -= 1;
+    }
+}
+$diaSemana = $hoje["wday"];
+$diaDaSemana = $diasDaSemana[$diaSemana];
+echo $diaDaSemana;
+?>
